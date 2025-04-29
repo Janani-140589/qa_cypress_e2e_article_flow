@@ -5,7 +5,7 @@ describe('Create article Flow', () => {
   before(() => {
     cy.task('generateUser').then((user) => {
       newUser = user;
-      cy.login(newUser.email, newUser.username, newUser.password);
+      cy.login(newUser.username, newUser.email, newUser.password);
       cy.visit('/');
     });
   });
@@ -39,7 +39,7 @@ describe('Delete article Flow', () => {
   before(() => {
     cy.task('generateUser').then((user) => {
       newUser = user;
-      cy.login(newUser.email, newUser.username, newUser.password);
+      cy.login(newUser.username, newUser.email, newUser.password);
       cy.createArticle(article.title, article.description, article.body);
       cy.visit('/');
     });
@@ -47,7 +47,7 @@ describe('Delete article Flow', () => {
 
   it('should be able to delete a article', () => {
     cy.contains('a', 'Global Feed').click();
-    cy.contains('a', `Article title: ${article.title}`).click();
+    cy.contains('a', article.title).click();
     cy.contains('button', 'Delete Article').click();
     cy.on('window:alert', (alertText) => {
       expect(alertText).to.contain('Do you really want to delete it?');
